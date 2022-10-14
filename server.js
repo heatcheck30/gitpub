@@ -1,48 +1,15 @@
 const express = require('express') // importing express library into the file (require = import)
 const app = express(); // creating 1st applicataion instance
-const drinks = [  // creating empty array called 'drinks'
-    {
-        name: 'cruddy mary',
-        price: 132,
-        image: 'https://i.imgur.com/Va5iIw5.jpg',
-      },
-      {
-        name: 'index on the beach',
-        price: 68,
-        image: 'https://i.imgur.com/XV2aPa2.jpg',
-      },
-      {
-        name: 'hack & coke',
-        price: 1,
-        image: 'https://i.imgur.com/rLOXFRI.jpg',
-      },
-      {
-        name: 'whiskey-value pair',
-        price: 11,
-        image: 'https://i.imgur.com/a7rmkoS.jpg',
-      },
-      {
-        name: '404 horsemen',
-        price: 202,
-        image: 'https://i.imgur.com/FLucOLr.jpg',
-      },
-      {
-        name: 'if stateMint julep',
-        price: 2,
-        image: 'https://i.imgur.com/yaoK0Dg.jpg',
-      },
-      {
-        name: 'APIPA',
-        price: 43,
-        image: 'https://i.imgur.com/qAhA7pi.jpg',
-      },
-      {
-        name: 'node to joy',
-        price: 56,
-        image: 'https://i.imgur.com/MbVdwZz.jpg',
-      },
-];
+const port = 3000
+const drinks = require('./models/drinks.js')
+const reqLog = (req) => {
+  console.log('=-=-=-=-=-=-=-=-=-=-=-=-=')
+  console.log('this is the request object sent from the browser')
+  console.log(`${req.method} request sent to ${req.url}`)
+  console.log('req params are: ', req.params)
+  console.log('=-=-=-=-=-=-=-=-=-=-=-=-=')
 
+}
 /**
  * client -- server
  * browser, mobile --- databse, server (express)
@@ -55,9 +22,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/drinks", (req, res) => {
-    res.render("drinks_index.ejs");
+    res.render('drinks_index.ejs', {drink: drinks});
 });
 
-app.listen(3000, () => { // app listens and starts server on port 3000
-    console.log('listening');
+app.get('drinks/:id', (req, res) => {
+  res.render('show', {drink: drinks[req.params.id]})
+})
+
+app.listen(port, () => { // app listens and starts server on port 3000
+    console.log('listening on port:', port);
 })
