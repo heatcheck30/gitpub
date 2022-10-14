@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/drinks", (req, res) => {
-    res.send(drinks);
+    res.render("drinks_index.ejs");
 });
 
 app.listen(3000, () => { // app listens and starts server on port 3000
